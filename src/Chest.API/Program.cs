@@ -37,11 +37,13 @@ builder.Services.AddScoped<IChestRepository, ChestRepository>();
 builder.Services.AddScoped<IChestCreationService, ChestCreationService>();
 builder.Services.AddScoped<IChestHuntService, ChestHuntService>();
 builder.Services.AddScoped<IChestManagementService, ChestManagementService>();
+builder.Services.AddScoped<IChestSearchService, ChestSearchService>();
+builder.Services.AddScoped<IChestDeletionService, ChestDeletionService>();
 
 // Registro dos Validadores
 // Se o erro persistir, verifique se instalou o pacote: FluentValidation.DependencyInjectionExtensions
 builder.Services.AddValidatorsFromAssemblyContaining<CreateChestValidator>();
-
+builder.Services.AddScoped<IChestHuntService, ChestHuntService>();
 // --- 4. PIPELINE DA APLICAÇÃO ---
 var app = builder.Build();
 

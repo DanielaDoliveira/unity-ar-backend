@@ -13,12 +13,16 @@ namespace Chest.API.Controller
     {
         
         private readonly IChestCreationService _creationService;
-        
+        private readonly IChestSearchService _searchService;
+        private readonly IChestDeletionService _deletionService;
+        private readonly IChestHuntService _huntService;
         // Injetamos o serviço no construtor
-        public ChestsController(IChestCreationService creationService)
+        public ChestsController(IChestCreationService creationService, IChestSearchService searchService, IChestDeletionService deletionService, IChestHuntService huntService)
         {
-        
             _creationService = creationService;
+            _searchService = searchService;
+            _deletionService = deletionService;
+            _huntService = huntService;
         }
         [HttpPost("create-chest")]
         [SwaggerOperation(Summary = ChestSwaggerDocs.CreateSummary, Description = ChestSwaggerDocs.CreateDescription)]
@@ -34,62 +38,62 @@ namespace Chest.API.Controller
         [HttpPost("find-chest")]
         [SwaggerOperation(Summary = ChestSwaggerDocs.FindSummary, Description = ChestSwaggerDocs.FindDescription)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> FindChest([FromBody] FindChest dto)
+        public async Task<IActionResult> FindChest([FromBody] FindChestRequest request)
         {
-            // // A lógica de busca agora consome os dados que vieram no DTO
-            // var chest = await _chestService.FindNearestAvailableAsync(dto.Latitude, dto.Longitude, 100);
-            //
-            // if (chest == null)
-            // {
-            //     // Regra: Se em 100m não houver nada disponível, retorna vazio (404)
-            //     return StatusCode(StatusCodes.Status404NotFound, new { message = "Área limpa: nenhum tesouro por aqui." });
-            // }
-            return StatusCode(StatusCodes.Status200OK, "Chest Founded!");
+            var chest = await _huntService.FindNearestAvailableAsync(request.Latitude, request.Longitude);
+
+            if (chest == null)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, "Nenhum baú disponível por perto");
+            }
+
+       
+            return StatusCode(StatusCodes.Status200OK, "Baú encontrado!");
+          
             
         }
 
-        [HttpPut("update-status/{chestId}")]
+        [HttpPut("lock/{chestId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [SwaggerOperation(Summary = ChestSwaggerDocs.UpdateSummary, Description = ChestSwaggerDocs.UpdateDescription)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        
-        public async Task<IActionResult> UpdateStatus(Guid chestId, [FromBody] UpdateChest dto)
+        public async Task<IActionResult> LockChest(Guid chestId, [FromQuery] Guid userId)
         {
-            // // O ATO: Pedimos ao serviço para processar a ocupação
-            // var success = await _chestService.UpdateChestStatusAsync(id, dto);
-            //
-            // if (!success) 
-            //     return StatusCode(StatusCodes.Status404NotFound);
+            var success = await _huntService.LockChestAsync(chestId, userId);
 
-            // 204 No Content: Sucesso, o baú agora é oficialmente deste jogador
-            return StatusCode(StatusCodes.Status204NoContent);
+            if (!success)
+            {
+                return Conflict(new { message = "Este baú já foi ocupado por outro caçador!" });
+            }
+
+            return StatusCode(StatusCodes.Status200OK, "Mapa traçado!");
         }
         
         [HttpGet("user-chests/{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [SwaggerOperation(Summary = ChestSwaggerDocs.GetSummary, Description = ChestSwaggerDocs.GetDescription)]
         public async Task<IActionResult> GetUserChests(Guid userId)
         {
-          //  var chest = await _repository.GetByIdAsync(userId); 
-            //if (chest == null) return NotFound();
+            var chests = await _searchService.GetUserChestsAsync(userId);
+            if(!chests.Any()) return StatusCode(StatusCodes.Status204NoContent);
       
-            return StatusCode(StatusCodes.Status200OK, "List of user chests");
+            return StatusCode(StatusCodes.Status200OK,chests);
         }
         
-        [HttpDelete("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [HttpDelete("{chestId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [SwaggerOperation(Summary = ChestSwaggerDocs.DeleteSummary, Description = ChestSwaggerDocs.DeleteDescription)]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid chestId, [FromQuery] Guid userId) 
         {
-            // // O Service verificará NOVAMENTE se IsSomebodyPlaying é false (Segurança de Backend)
-            // var result = await _chestService.DeleteChestAsync(id);
-            //
-            // if (result == "NOT_FOUND") return StatusCode(StatusCodes.Status404NotFound);
-            //
-            // if (result == "IS_PLAYING") 
-            //     return StatusCode(StatusCodes.Status400BadRequest, new { message = "Baú ocupado no momento." });
+            // Agora passamos os DOIS IDs para o serviço
+            var deleted = await _deletionService.DeleteChestAsync(chestId, userId);
 
-            // Retorna a sua DeleteChestResponse com a mensagem de sucesso
-            return StatusCode(StatusCodes.Status200OK, new DeleteChestResponse("Baú deletado com sucesso!"));
+            if (!deleted)
+                return StatusCode(StatusCodes.Status404NotFound);
+
+           
+            return StatusCode(StatusCodes.Status204NoContent); 
         }
     }
 }

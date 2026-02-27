@@ -28,4 +28,20 @@ public class Chest
         IsSomebodyPlaying = false; // Regra: Sempre false ao criar
         CreatedAt = DateTime.UtcNow;
     }
+    
+    public void Claim(Guid rivalId)
+    {
+        if (IsSomebodyPlaying)
+            throw new InvalidOperationException("Este baú já está sendo jogado por outra pessoa.");
+
+        IsSomebodyPlaying = true;
+        RivalId = rivalId;
+    }
+    
+
+    public void Release()
+    {
+        IsSomebodyPlaying = false;
+        RivalId = null;
+    }
 }

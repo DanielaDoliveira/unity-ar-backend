@@ -21,6 +21,13 @@ public class ChestExceptionFilter: IExceptionFilter
         }
         context.ExceptionHandled = true;
         
-        
+        if (context.Exception is UnauthorizedAccessException)
+        {
+            context.Result = new ObjectResult(new { message = context.Exception.Message })
+            {
+                StatusCode = StatusCodes.Status403Forbidden
+            };
+            context.ExceptionHandled = true;
+        }
     }
 }

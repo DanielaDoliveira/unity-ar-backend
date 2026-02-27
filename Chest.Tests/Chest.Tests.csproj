@@ -27,6 +27,7 @@
     <ItemGroup>
       <ProjectReference Include="..\src\Chest.Application\Chest.Application.csproj" />
       <ProjectReference Include="..\src\Chest.Domain\Chest.Domain.csproj" />
+      <ProjectReference Include="..\src\Chest.Infrastructure\Chest.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

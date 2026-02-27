@@ -1,6 +1,21 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=21754e6d_002D3a9c_002D448a_002Daf20_002D1ef22391ab7a/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="ChestCreationServiceTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=21754e6d_002D3a9c_002D448a_002Daf20_002D1ef22391ab7a/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ChestCreationServiceTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
     &lt;TestId&gt;xUnit::52A1B608-F304-475E-90C6-E2AC842191B2::net8.0::Chest.Tests.Application.ChestCreationServiceTest&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::52A1B608-F304-475E-90C6-E2AC842191B2::net8.0::Chest.UnitTests.Application.ChestSearchServiceTests&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=7885b6ab_002Dafee_002D4480_002Db58e_002D811370e1d77d/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="ChestSearchServiceTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::52A1B608-F304-475E-90C6-E2AC842191B2::net8.0::Chest.UnitTests.Application.ChestSearchServiceTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::52A1B608-F304-475E-90C6-E2AC842191B2::net8.0::Chest.Tests.Application.ChestCreationServiceTest&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::52A1B608-F304-475E-90C6-E2AC842191B2::net8.0::Chest.Tests.Infrastructure.ChestRepositoryTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::52A1B608-F304-475E-90C6-E2AC842191B2::net8.0::Chest.Tests.ChestDeletionServiceTest&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=d4cab3ce_002Da2e6_002D4e6c_002Db41a_002D734dfa81d36b/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ChestCreationServiceTest #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::52A1B608-F304-475E-90C6-E2AC842191B2::net8.0::Chest.Tests.Application.ChestCreationServiceTest&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::52A1B608-F304-475E-90C6-E2AC842191B2::net8.0::Chest.UnitTests.Application.ChestSearchServiceTests&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
