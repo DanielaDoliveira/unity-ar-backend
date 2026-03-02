@@ -10,9 +10,11 @@
       <ProjectReference Include="..\Chest.Communication\Chest.Communication.csproj" />
       <ProjectReference Include="..\Chest.Domain\Chest.Domain.csproj" />
       <ProjectReference Include="..\Chest.Exception\Chest.Exception.csproj" />
+      <ProjectReference Include="..\Chest.Infrastructure\Chest.Infrastructure.csproj" />
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="BCrypt.Net-Next" Version="4.1.0" />
       <PackageReference Include="FluentValidation" Version="11.12.0" />
       <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.12.0" />
     </ItemGroup>

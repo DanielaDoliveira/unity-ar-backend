@@ -5,6 +5,7 @@ using Chest.Application.Services;
 using Chest.Application.Validators;
 using Chest.Domain.Interfaces;
 using Chest.Infrastructure.Data;
+using Chest.Infrastructure.Repositories;
 using Chest.Infrastructure.Repository;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore; // OBRIGATÓRIO para os validadores funcionarem
@@ -39,11 +40,13 @@ builder.Services.AddScoped<IChestHuntService, ChestHuntService>();
 builder.Services.AddScoped<IChestManagementService, ChestManagementService>();
 builder.Services.AddScoped<IChestSearchService, ChestSearchService>();
 builder.Services.AddScoped<IChestDeletionService, ChestDeletionService>();
-
+builder.Services.AddScoped<IChestHuntService, ChestHuntService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 // Registro dos Validadores
 // Se o erro persistir, verifique se instalou o pacote: FluentValidation.DependencyInjectionExtensions
 builder.Services.AddValidatorsFromAssemblyContaining<CreateChestValidator>();
-builder.Services.AddScoped<IChestHuntService, ChestHuntService>();
+
 // --- 4. PIPELINE DA APLICAÇÃO ---
 var app = builder.Build();
 
@@ -58,3 +61,5 @@ app.UseHttpsRedirection();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }

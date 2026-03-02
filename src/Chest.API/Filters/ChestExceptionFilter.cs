@@ -8,26 +8,26 @@ public class ChestExceptionFilter: IExceptionFilter
 {
     public void OnException(ExceptionContext context)
     {
-        if (context.Exception is ValidationErrorsException ex)
-        {
-            context.HttpContext.Response.StatusCode = 400; // Bad Request
+         if (context.Exception is ValidationErrorsException ex)
             context.Result = new BadRequestObjectResult(new { Errors = ex.ErrorMessages });
-        }
-        else
+         
+        else if (context.Exception is UnauthorizedAccessException authEx)
         {
-            // Erro desconhecido (ex: banco caiu)
-            context.HttpContext.Response.StatusCode = 500;
-            context.Result = new ObjectResult(new { Error = "Erro interno no servidor." });
-        }
-        context.ExceptionHandled = true;
-        
-        if (context.Exception is UnauthorizedAccessException)
-        {
-            context.Result = new ObjectResult(new { message = context.Exception.Message })
+            context.Result = new ObjectResult(new { message = authEx.Message })
             {
                 StatusCode = StatusCodes.Status403Forbidden
             };
-            context.ExceptionHandled = true;
         }
+        // No ChestExceptionFilter.cs, mude o 'else' (Caso 3):
+        else
+        {
+            context.Result = new ObjectResult(new {
+                Message = "Ocorreu um erro inesperado no navio!",
+                Detail = context.Exception.Message, // <-- ADICIONE ISSO
+                StackTrace = context.Exception.StackTrace // <-- E ISSO
+            }) { StatusCode = 500 };
+        }
+
+        context.ExceptionHandled = true;
     }
 }
