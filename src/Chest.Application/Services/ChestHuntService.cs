@@ -34,7 +34,7 @@ public class ChestHuntService : IChestHuntService
     // ETAPA 2: O Jogador viu o Pop-up e clicou em "OK" na Unity
     public async Task<bool> LockChestAsync(Guid chestId, Guid userId)
     {
-        // 1. Buscamos o baú específico que o jogador quer abrir
+        // 1. Busca o baú específico que o jogador quer abrir
         var chest = await _repository.GetByIdAsync(chestId);
 
         // 2. Validação: se o baú sumiu ou alguém trancou no milissegundo anterior

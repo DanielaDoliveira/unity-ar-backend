@@ -25,7 +25,7 @@ public class Chest
         Latitude = lat;
         Longitude = lon;
         UserId = userId;
-        IsSomebodyPlaying = false; // Regra: Sempre false ao criar
+        IsSomebodyPlaying = false; 
         CreatedAt = DateTime.UtcNow;
     }
     

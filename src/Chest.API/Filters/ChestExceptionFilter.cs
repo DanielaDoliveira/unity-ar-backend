@@ -18,13 +18,14 @@ public class ChestExceptionFilter: IExceptionFilter
                 StatusCode = StatusCodes.Status403Forbidden
             };
         }
+         
         // No ChestExceptionFilter.cs, mude o 'else' (Caso 3):
         else
         {
             context.Result = new ObjectResult(new {
                 Message = "Ocorreu um erro inesperado no navio!",
-                Detail = context.Exception.Message, // <-- ADICIONE ISSO
-                StackTrace = context.Exception.StackTrace // <-- E ISSO
+                Detail = context.Exception.Message,
+                StackTrace = context.Exception.StackTrace 
             }) { StatusCode = 500 };
         }
 

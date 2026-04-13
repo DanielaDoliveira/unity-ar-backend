@@ -20,7 +20,8 @@ public class ChestDeletionService : IChestDeletionService
 
         if (chest.UserId != userId)
             throw new UnauthorizedAccessException("You are not the owner of this chest.");
-        
+        if(chest.IsSomebodyPlaying)
+            throw new UnauthorizedAccessException("You can't delete. An pirate is finding this chest");
 
         await _repository.DeleteAsync(chest);
         return true;

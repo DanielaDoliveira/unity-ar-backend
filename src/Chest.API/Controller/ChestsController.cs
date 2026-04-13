@@ -16,7 +16,7 @@ namespace Chest.API.Controller
         private readonly IChestSearchService _searchService;
         private readonly IChestDeletionService _deletionService;
         private readonly IChestHuntService _huntService;
-        // Injetamos o serviço no construtor
+      
         public ChestsController(IChestCreationService creationService, IChestSearchService searchService, IChestDeletionService deletionService, IChestHuntService huntService)
         {
             _creationService = creationService;
@@ -44,11 +44,11 @@ namespace Chest.API.Controller
 
             if (chest == null)
             {
-                return StatusCode(StatusCodes.Status404NotFound, "Nenhum baú disponível por perto");
+                return StatusCode(StatusCodes.Status404NotFound, "No treasure found in this region");
             }
 
        
-            return StatusCode(StatusCodes.Status200OK, "Baú encontrado!");
+            return StatusCode(StatusCodes.Status200OK, "Chest Found!");
           
             
         }
@@ -62,10 +62,10 @@ namespace Chest.API.Controller
 
             if (!success)
             {
-                return Conflict(new { message = "Este baú já foi ocupado por outro caçador!" });
+                return Conflict(new { message = "This chest has already been chosen by another pirate." });
             }
 
-            return StatusCode(StatusCodes.Status200OK, "Mapa traçado!");
+            return StatusCode(StatusCodes.Status200OK, "Map drawn");
         }
         
         [HttpGet("user-chests/{userId}")]
@@ -86,7 +86,7 @@ namespace Chest.API.Controller
         [SwaggerOperation(Summary = ChestSwaggerDocs.DeleteSummary, Description = ChestSwaggerDocs.DeleteDescription)]
         public async Task<IActionResult> Delete(Guid chestId, [FromQuery] Guid userId) 
         {
-            // Agora passamos os DOIS IDs para o serviço
+          
             var deleted = await _deletionService.DeleteChestAsync(chestId, userId);
 
             if (!deleted)

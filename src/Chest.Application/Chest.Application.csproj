@@ -7,7 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Chest.Communication\Chest.Communication.csproj" />
       <ProjectReference Include="..\Chest.Domain\Chest.Domain.csproj" />
       <ProjectReference Include="..\Chest.Exception\Chest.Exception.csproj" />
       <ProjectReference Include="..\Chest.Infrastructure\Chest.Infrastructure.csproj" />
